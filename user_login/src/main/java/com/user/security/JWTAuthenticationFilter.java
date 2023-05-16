@@ -1,36 +1,17 @@
 package com.user.security;
 
-import static com.user.security.Constants.HEADER_AUTHORIZACION_KEY;
-import static com.user.security.Constants.ISSUER_INFO;
-import static com.user.security.Constants.SUPER_SECRET_KEY;
-import static com.user.security.Constants.TOKEN_BEARER_PREFIX;
-import static com.user.security.Constants.TOKEN_EXPIRATION_TIME;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.util.StringUtils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.user.dto.LUsers;
 import com.user.service.UsuarioDetailsServiceImpl;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -53,8 +34,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
 			UserDetails userDetails = usuarioDetailsService.loadUserByUsername(username);
 			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-					userDetails,null, userDetails.getAuthorities());
-			
+					userDetails, null, userDetails.getAuthorities());
+
 			authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 			SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 		}

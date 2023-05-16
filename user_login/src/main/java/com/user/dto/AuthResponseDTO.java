@@ -1,25 +1,12 @@
 package com.user.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-
-
 public class AuthResponseDTO {
-	
-	@Id
-	private long id;
+
 	private String accessToken;
 	private String tokenType = "Bearer ";
 
 	public AuthResponseDTO(String accessToken) {
 		this.accessToken = accessToken;
-	}
-
-	/**
-	 * @return the id
-	 */
-	public long getId() {
-		return id;
 	}
 
 	/**
@@ -37,13 +24,6 @@ public class AuthResponseDTO {
 	}
 
 	/**
-	 * @param id the id to set
-	 */
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	/**
 	 * @param accessToken the accessToken to set
 	 */
 	public void setAccessToken(String accessToken) {
@@ -56,7 +36,5 @@ public class AuthResponseDTO {
 	public void setTokenType(String tokenType) {
 		this.tokenType = tokenType;
 	}
-	
-	
 
 }

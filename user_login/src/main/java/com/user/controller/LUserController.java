@@ -6,8 +6,6 @@ package com.user.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -40,7 +38,7 @@ import com.user.security.JwtGenerator;
 
 @RestController
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
-public class SUserController {
+public class LUserController {
 
 	@Autowired
 	LUserServiceImpl userServiceImpl;
@@ -53,8 +51,7 @@ public class SUserController {
 	
 	private JwtGenerator jwtGenerator;
 
-	@Autowired
-	public SUserController(ILUserDAO iUsuarioDAO, PasswordEncoder bCryptPasswordEncoder, JwtGenerator jwtGenerator,
+	public LUserController(ILUserDAO iUsuarioDAO, PasswordEncoder bCryptPasswordEncoder, JwtGenerator jwtGenerator,
 			AuthenticationManager authenticationManager) {
 		this.iSuserDAO = iUsuarioDAO;
 		this.passwordEncoder = bCryptPasswordEncoder;
@@ -77,11 +74,11 @@ public class SUserController {
 	
 	
 	@PostMapping("/register")
-	public ResponseEntity<LUsers> saveUsuario(@RequestBody LUsers user) {
+	public LUsers saveUsuario(@RequestBody LUsers user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		iSuserDAO.save(user);
 		// return user;
-		return new ResponseEntity<>(user, HttpStatus.OK);
+		return user;
 	}
 
 	/** Get: List all users */
@@ -105,6 +102,7 @@ public class SUserController {
 		user_selected = userServiceImpl.getUserById(id);
 		user_selected.setUsername(user.getUsername());
 		user_selected.setPassword(user.getPassword());
+		user_selected.setRole(user.getRole());
 
 		return userServiceImpl.updateUser(user_selected);
 	}
