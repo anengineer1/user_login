@@ -1,7 +1,16 @@
 # User Login
 
 
-Application that makes use of the Json Web Token and Spring Security
+Application that makes use of the Json Web Token and Spring Security.
+
+It has been used:
+  * H2
+  * Spring Security
+  * Spring Data JPA
+  * Spring Web
+  * Spring Boot DevTools
+  * JWT
+  * Jackson
 
 ## Usage
 
