@@ -2,10 +2,8 @@ package com.user.dto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.Data;
 
-@Data
-@Entity
+
 public class AuthResponseDTO {
 	
 	@Id

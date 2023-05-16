@@ -24,6 +24,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 //import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.user.dao.ILUserDAO;
 import com.user.service.LUserServiceImpl;
 import com.user.dto.AuthResponseDTO;
@@ -60,7 +63,7 @@ public class SUserController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<AuthResponseDTO> login(@RequestBody LUsers user) {
+	public String login(@RequestBody LUsers user) throws JsonProcessingException {
 		UsernamePasswordAuthenticationToken test = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
 		
 		Authentication authentication = authenticationManager.authenticate(test);
@@ -68,7 +71,8 @@ public class SUserController {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String token = jwtGenerator.generateToken(authentication);
 		AuthResponseDTO authResponseDTO = new AuthResponseDTO(token);
-		return new ResponseEntity<>(authResponseDTO, HttpStatus.OK);
+		ObjectMapper objectMapper = new ObjectMapper();
+		return objectMapper.writeValueAsString(authResponseDTO);
 	}
 	
 	
@@ -81,19 +85,19 @@ public class SUserController {
 	}
 
 	/** Get: List all users */
-	@GetMapping("/susers")
+	@GetMapping("/users")
 	public List<LUsers> listUsers() {
 		return userServiceImpl.listUsers();
 	}
 
 	/** Get: Read info about an user */
-	@GetMapping("/susers/{id}")
+	@GetMapping("/users/{id}")
 	public LUsers getUserById(@PathVariable(name = "id") Long id) {
 		return userServiceImpl.getUserById(id);
 	}
 
 	/** Update: an user */
-	@PutMapping("/susers/{id}")
+	@PutMapping("/users/{id}")
 	public LUsers updateUser(@PathVariable(name = "id") Long id, @RequestBody LUsers user) {
 
 		LUsers user_selected = new LUsers();
@@ -106,7 +110,7 @@ public class SUserController {
 	}
 
 	/** Delete: an user */
-	@DeleteMapping("/susers/{id}")
+	@DeleteMapping("/users/{id}")
 	public void deleteUser(@PathVariable(name = "id") Long id) {
 		userServiceImpl.deleteUser(id);
 	}
