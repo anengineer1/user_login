@@ -19,7 +19,6 @@ public class JwtGenerator {
 
 		String token = Jwts.builder().setSubject(username).setIssuedAt(currentDate).setExpiration(expirationDate)
 				.signWith(SignatureAlgorithm.HS512, Constants.SUPER_SECRET_KEY).compact();
-		// .signWith(Keys.hmacShaKeyFor(Constants.SUPER_SECRET_KEY.getBytes())).compact();
 		return token;
 	}
 

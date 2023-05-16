@@ -24,7 +24,7 @@ After that it will return the Bearer token that can be used for accessing the re
 One can use curl to specify the Bearer token and that will grant access to the rest of the endpoints:
 
 
-  * The following is a GET requests that gives the info of all the users, keep in mind that the password section is encrypted with the bcrypt password-hashing function:
+  * The following is a GET requests that gives the info of all the users, keep in mind that the password section is encrypted with the bcrypt password-hashing function[^1]:
 
         curl -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4NDI2MzQ1MSwiZXhwIjoxNjg1MTI3NDUxfQ.M9iD4XQFh1qOijbLA0bFlWHo-GLRZEgiw0lEyKXX5L9O6GXJUBhga95m8eIXvqybTJDyIGBsQvd7jssUndYKmg" -X GET localhost:8181/users | jq
 		
@@ -54,7 +54,7 @@ One can use curl to specify the Bearer token and that will grant access to the r
 ]
 ```
 
-  * The following is a POST request that registers a new user to log in into and get the token
+  * The following is a POST request that registers a new user to log in into and get the token. You can assign any role wanted, the application doesn't filter differently depending on the role, it is left there in case there's the need to implement roles when using this for a different project:
   
 		curl -i -H "Content-Type: application/json" -X POST -d '{ "username": "rebeca", "password": "parole", "role": "admin"}' http://localhost:8181/register
 		
@@ -82,3 +82,5 @@ Another alternative is using Maven from the command line:
 ## License 
 
 [MIT](https://opensource.org/licenses/MIT)
+
+[^1]: Keep in mind that you need to use the token the application provided

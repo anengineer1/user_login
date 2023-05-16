@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.user.dto.LUsers;
 
 /**
- * @author Elena, Alejandro, Francisco
+ * @author Francisco
  *
  */
 public interface ILUserDAO extends JpaRepository<LUsers, Long> {

@@ -14,16 +14,16 @@ public class LUsers {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	@Column(name = "username")
 	private String username;
-	
+
 	@Column(name = "password")
 	private String password;
-	
+
 	@Column(name = "role")
 	private String role;
-	
+
 	public LUsers() {
 	}
 
@@ -100,5 +100,5 @@ public class LUsers {
 	public String toString() {
 		return "Usuario [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role + "]";
 	}
-	
+
 }

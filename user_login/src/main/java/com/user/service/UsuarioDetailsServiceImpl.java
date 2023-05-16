@@ -33,6 +33,12 @@ public class UsuarioDetailsServiceImpl implements UserDetailsService {
 		return new User(luser.getUsername(), luser.getPassword(), mapRolesToAuthorities(luser.getRole()));
 	}
 
+	/**
+	 * Takes a string and transforms it into a collection so it can get passed to
+	 * "User"
+	 * 
+	 * @param String
+	 */
 	private Collection<GrantedAuthority> mapRolesToAuthorities(String rol) {
 		ArrayList<String> roles = new ArrayList<String>();
 		roles.add(rol);

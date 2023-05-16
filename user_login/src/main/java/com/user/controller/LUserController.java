@@ -37,18 +37,19 @@ import com.user.security.JwtGenerator;
  */
 
 @RestController
-@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
+@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
+		RequestMethod.DELETE })
 public class LUserController {
 
 	@Autowired
 	LUserServiceImpl userServiceImpl;
-	
+
 	private AuthenticationManager authenticationManager;
 
 	private ILUserDAO iSuserDAO;
 
 	private PasswordEncoder passwordEncoder;
-	
+
 	private JwtGenerator jwtGenerator;
 
 	public LUserController(ILUserDAO iUsuarioDAO, PasswordEncoder bCryptPasswordEncoder, JwtGenerator jwtGenerator,
@@ -58,21 +59,26 @@ public class LUserController {
 		this.jwtGenerator = jwtGenerator;
 		this.authenticationManager = authenticationManager;
 	}
-	
+
+	/**
+	 * This is responsible for the login, it creates an object with the token and
+	 * returns it
+	 */
 	@PostMapping("/login")
 	public String login(@RequestBody LUsers user) throws JsonProcessingException {
-		UsernamePasswordAuthenticationToken test = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
-		
+		UsernamePasswordAuthenticationToken test = new UsernamePasswordAuthenticationToken(user.getUsername(),
+				user.getPassword());
+
 		Authentication authentication = authenticationManager.authenticate(test);
-		
+
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String token = jwtGenerator.generateToken(authentication);
 		AuthResponseDTO authResponseDTO = new AuthResponseDTO(token);
 		ObjectMapper objectMapper = new ObjectMapper();
 		return objectMapper.writeValueAsString(authResponseDTO);
 	}
-	
-	
+
+	/** This creates a new user for later to log in into */
 	@PostMapping("/register")
 	public LUsers saveUsuario(@RequestBody LUsers user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -81,19 +87,19 @@ public class LUserController {
 		return user;
 	}
 
-	/** Get: List all users */
+	/** List all users */
 	@GetMapping("/users")
 	public List<LUsers> listUsers() {
 		return userServiceImpl.listUsers();
 	}
 
-	/** Get: Read info about an user */
+	/** Read info about a user by specifying the id */
 	@GetMapping("/users/{id}")
 	public LUsers getUserById(@PathVariable(name = "id") Long id) {
 		return userServiceImpl.getUserById(id);
 	}
 
-	/** Update: an user */
+	/** Modify a user, you need specify the data by a json body */
 	@PutMapping("/users/{id}")
 	public LUsers updateUser(@PathVariable(name = "id") Long id, @RequestBody LUsers user) {
 
@@ -107,7 +113,7 @@ public class LUserController {
 		return userServiceImpl.updateUser(user_selected);
 	}
 
-	/** Delete: an user */
+	/** Delete a user */
 	@DeleteMapping("/users/{id}")
 	public void deleteUser(@PathVariable(name = "id") Long id) {
 		userServiceImpl.deleteUser(id);

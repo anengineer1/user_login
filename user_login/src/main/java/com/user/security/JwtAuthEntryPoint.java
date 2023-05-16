@@ -14,7 +14,6 @@ import jakarta.servlet.http.HttpServletResponse;
 public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
 
 	public JwtAuthEntryPoint() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
