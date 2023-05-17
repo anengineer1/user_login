@@ -3,13 +3,17 @@
 
 Application that makes use of the Json Web Token and Spring Security.
 
-It has been used:
+It has been used for the embedded database:
   * H2
+  
+For Spring and its security:
   * Spring Security
   * Spring Data JPA
   * Spring Web
   * Spring Boot DevTools
   * JWT
+  
+For mapping an object into a json object:
   * Jackson
 
 ## Usage
@@ -115,7 +119,9 @@ Another alternative is using Maven from the command line:
 
 	mvn spring-boot:run
 
+## Author
 
+Francisco Parra Pérez
 
 ## License 
 
