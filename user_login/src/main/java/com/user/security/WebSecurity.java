@@ -24,61 +24,58 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableWebSecurity
 public class WebSecurity {
-	
+
 	private JwtAuthEntryPoint jwtAuthEntryPoint;
 
 	public WebSecurity(JwtAuthEntryPoint jwtAuthEntryPoint) {
 		this.jwtAuthEntryPoint = jwtAuthEntryPoint;
 	}
 
-    @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	@Bean
+	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		/*
 		 * 1. Se desactiva el uso de cookies 2. Se activa la configuración CORS con los
 		 * valores por defecto 3. Se desactiva el filtro CSRF 4. Se indica que el login
 		 * no requiere autenticación 5. Se indica que el resto de URLs esten securizadas
 		 */
-		 http
-         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-         .and()
-         .cors()
-         .and()
-         .csrf().disable()
-         .exceptionHandling()
-         .authenticationEntryPoint(jwtAuthEntryPoint)
-         .and()
-         .authorizeHttpRequests((authz) -> authz
-        		 // Grant access to the console
-                 .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
-                 // Grant access the the welcome message 
-                 .requestMatchers(HttpMethod.GET, "/").permitAll()
-                 // Grant access to login and register
-                 .requestMatchers(HttpMethod.POST, "/register").permitAll()
-                 .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                 // Prevent the deletion of the admin
-                 .requestMatchers(HttpMethod.DELETE, "/users/1").denyAll()
-                 // Any other request must be vie an authenticated user
-                 .anyRequest().authenticated()
-                 .and()
-                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class));
-		 
-		 return http.build();
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		.and()
+		.cors()
+		.and()
+		.csrf()
+				.disable().exceptionHandling().authenticationEntryPoint(jwtAuthEntryPoint).and()
+				.authorizeHttpRequests((authz) -> authz
+						// Grant access to the console
+						.requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
+						// Grant access the the welcome message
+						.requestMatchers(HttpMethod.GET, "/").permitAll()
+						// Grant access to login and register
+						.requestMatchers(HttpMethod.POST, "/register").permitAll()
+						.requestMatchers(HttpMethod.POST, "/login").permitAll()
+						// Prevent the deletion of the admin
+						.requestMatchers(HttpMethod.DELETE, "/users/1").denyAll()
+						// Any other request must be vie an authenticated user
+						.anyRequest().authenticated()
+						.and()
+						.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class));
+
+		return http.build();
 	}
-	
-    @Bean
-    AuthenticationManager authenticationManager(AuthenticationConfiguration auth_config) throws Exception {
-    	return auth_config.getAuthenticationManager();
-    }
-    
+
+	@Bean
+	AuthenticationManager authenticationManager(AuthenticationConfiguration auth_config) throws Exception {
+		return auth_config.getAuthenticationManager();
+	}
+
 	@Bean
 	PasswordEncoder PasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-    
-    @Bean
-    JWTAuthenticationFilter jwtAuthenticationFilter() {
-    	return new JWTAuthenticationFilter();
-    }
+
+	@Bean
+	JWTAuthenticationFilter jwtAuthenticationFilter() {
+		return new JWTAuthenticationFilter();
+	}
 
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
