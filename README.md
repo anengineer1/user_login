@@ -115,7 +115,7 @@ This a Spring Boot which means it can be run in different ways, you can do it ei
 
 ![Eclipse](./screenshots/Eclipse_ide_run.png)
 
-Another alternative is using Maven from the command line:
+Another alternative is going inside "./user_login" and use Maven from the command line:
 
 	mvn spring-boot:run
 
