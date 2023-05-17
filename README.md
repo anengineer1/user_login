@@ -68,7 +68,7 @@ By accessing using the browser:
 One can use curl to specify the Bearer token and that will grant access to the rest of the endpoints:
 
 
-  * The following is a GET requests that gives the info of all the users, keep in mind that the password section is encrypted with the bcrypt password-hashing function[^1]:
+  * The following is a GET request that gives the info of all the users, keep in mind that the password section is encrypted with the bcrypt password-hashing function[^1]:
 
         curl -H "Content-Type: application/json" -H "Authorization: Bearer <your_bearer_token>" -X GET localhost:8181/users | jq
 		
@@ -83,7 +83,7 @@ One can use curl to specify the Bearer token and that will grant access to the r
 ]
 ```
 
-  * The following is a GET requests that gives the info the user by giving the id (/users/{id}), keep in mind that the password section is encrypted with the bcrypt password-hashing function:
+  * The following is a GET request that gives the info the user by giving the id (/users/{id}), keep in mind that the password section is encrypted with the bcrypt password-hashing function:
   
           curl -H "Content-Type: application/json" -H "Authorization: Bearer <your_bearer_token>" -X GET localhost:8181/users/1 | jq
 		
