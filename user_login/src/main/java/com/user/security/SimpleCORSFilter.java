@@ -17,6 +17,10 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * @author Francisco
+ *
+ */
 @Component
 public class SimpleCORSFilter implements Filter {
 

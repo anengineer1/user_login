@@ -1,5 +1,9 @@
 package com.user.security;
 
+/**
+ * @author Francisco
+ *
+ */
 public class Constants {
 
 	// Spring Security

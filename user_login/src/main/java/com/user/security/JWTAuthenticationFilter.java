@@ -17,6 +17,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * @author Francisco
+ *
+ */
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
 	@Autowired

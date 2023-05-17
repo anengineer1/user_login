@@ -14,7 +14,7 @@ It has been used:
 
 ## Usage
 
-By default the application doesn't allow for anything aside from registering and login, by default it includes the admin user with the password "password", you can try it by using the curl command:
+By default the application doesn't allow for anything aside from registering and login and the defaul route, by default it includes the admin user with the password "password", you can try it by using the curl command:
 
         curl -i -H "Content-Type: application/json" -X POST -d '{ "username": "admin", "password": "password"}' http://localhost:8181/login
 		
@@ -27,6 +27,37 @@ After that it will return the Bearer token that can be used for accessing the re
 }
 
 ```
+
+The default route includes a welcome message that one can access via curl or browser (it doesn't require login):
+
+
+         curl -i -H "Content-Type: application/json" -X GET localhost:8181/
+		 
+```
+HTTP/1.1 200 
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Methods: POST, GET, OPTIONS, DELETE
+Access-Control-Max-Age: 3600
+Access-Control-Allow-Headers: Content-Type, Accept, X-Requested-With, remember-me, Host, Content-Lenght
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Type: text/plain;charset=UTF-8
+Content-Length: 31
+Date: Wed, 17 May 2023 07:23:23 GMT
+
+<h1>Login & Register server<h1>
+```
+
+By accessing using the browser:
+
+![Eclipse](./screenshots/default_route.png)
 
 ### Endpoints
 

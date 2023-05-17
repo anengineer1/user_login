@@ -11,11 +11,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+/**
+ * @author Francisco
+ *
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurity {
@@ -43,9 +48,16 @@ public class WebSecurity {
          .authenticationEntryPoint(jwtAuthEntryPoint)
          .and()
          .authorizeHttpRequests((authz) -> authz
+        		 // Grant access to the console
+                 .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
+                 // Grant access the the welcome message 
+                 .requestMatchers(HttpMethod.GET, "/").permitAll()
+                 // Grant access to login and register
                  .requestMatchers(HttpMethod.POST, "/register").permitAll()
                  .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                 // Prevent the deletion of the admin
                  .requestMatchers(HttpMethod.DELETE, "/users/1").denyAll()
+                 // Any other request must be vie an authenticated user
                  .anyRequest().authenticated()
                  .and()
                  .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class));

@@ -1,5 +1,9 @@
 package com.user.dto;
 
+/**
+ * @author Francisco
+ *
+ */
 public class AuthResponseDTO {
 
 	private String accessToken;
